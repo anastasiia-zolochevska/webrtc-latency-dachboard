@@ -1,0 +1,8 @@
+{
+  "name": "webrtc-latency-dashboard",
+  "version": "0.0.1",
+  "description": "webrtc-latency-dashboard",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
