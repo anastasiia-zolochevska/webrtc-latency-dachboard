@@ -6,7 +6,7 @@ function getRttData(location, title) {
 
     xhr.onload = function () {
         var response = JSON.parse(xhr.responseText);
-        var data = response.map(entry => { return { 'label': entry.timestamp, 'y': entry.rtt } });
+        var data = response.map(entry => {  return { 'label': new Date(entry.timestamp).getHours()+":"+new Date(entry.timestamp).getMinutes(), 'y': entry.rtt } });
         var data = processData(data);
         console.log(location + "_chart", data);
         buildChart(location + "_chart", title, data);
@@ -27,7 +27,7 @@ getRttData('northEurope_westEurope', "Server: North Europe, Client: West Europe"
 
 function buildChart(chartId, title, data) {
     var chart = new CanvasJS.Chart(chartId, {
-        theme: "theme2",//theme1
+        theme: "theme1",//theme1
         title: {
             text: title
         },
@@ -44,13 +44,13 @@ function buildChart(chartId, title, data) {
 
 function processData(data) {
     var result = [];
-    for (var i= 1; i < data.length-1; i++){
-        
-        if((data[i].y>data[i-1].y*0.8 && data[i].y<data[i+1].y*1.2) || (data[i].y<data[i-1].y*1.2 && data[i].y>data[i+1].y*0.8)){
+    for (var i = 1; i < data.length - 1; i++) {
+
+        if ((data[i].y > data[i - 1].y * 0.8 && data[i].y < data[i + 1].y * 1.2) || (data[i].y < data[i - 1].y * 1.2 && data[i].y > data[i + 1].y * 0.8)) {
             result.push(data[i]);
         }
-        else{
-console.log(data[i].y, data[i-1].y*0.8, data[i+1].y*1.2)
+        else {
+            console.log(data[i].y, data[i - 1].y * 0.8, data[i + 1].y * 1.2)
         }
     }
     return result
